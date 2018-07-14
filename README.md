@@ -18,17 +18,25 @@ This project just lists the basic instructions to install the Tyk open source AP
 
 See the tyk configuration file `tyk.conf` in this repository.
 
+Note that the `tyk.conf` file in this example:
+ * uses SSL and specifies the certificates to use (in `http_server_options`)
+ * set the `listen_port`, but it's **useless** since it's **overridden by the env variable** `TYKLISTENPORT`
+
 ## 4. Start the tyk gateway container
 
-    docker run -d --network tyk-net --name gateway -p 8080:8080 -e TYKSECRET=asdasd -v  /root/tyk-ce/tyk.conf:/opt/tyk-gateway/tyk.conf tykio/tyk-gateway     
+    docker run -itd --network tyk-net --name gateway -p 443:443 -e TYKSECRET=asdasd -e TYKLISTENPORT=443 -v /root/tyk-ce/tyk.conf:/opt/tyk-gateway/tyk.conf -v <path-to-certificates-on-host>:/certificates tykio/tyk-gateway
 
 Important steps here:
  * replate `tyk-net` with your network (but has to be the same of redis)
  * set the right port (in this case 8080)
- * set the right TYKSECRET: this is going to be used to call the Tyk Gateway own APIs ( `x-tyk-authorization` header)
+ * set the right `TYKSECRET`: this is going to be used to call the Tyk Gateway own APIs ( `x-tyk-authorization` header)
+ * set the right `TYKLISTENPORT`
+ * set the right `<path-to-certificates-on-host>` with the folder where the host certificates are contained
  * link the 'tyk.conf' file
 
-*Note that the 'secret' field in the* `tyk.conf` *file won't actually set the TYK SECRET, since Tyk will override it with the TYKSECRET environment variable: that's why we're passing that env variable in the docker run command.*
+*Note that the* `secret` *field in the* `tyk.conf` *file won't actually set the TYK SECRET, since Tyk will override it with the TYKSECRET environment variable: that's why we're passing that env variable in the docker run command.*
+
+*Note that the* `listen_port` *parameter in* `tyk.conf` *is useless and gets overridden by the TYKLISTENPORT env variable that has to be set when starting the container.* 
 
 At this point the gateway should be answering on http://localhost:8080/tyk/apis.
 
