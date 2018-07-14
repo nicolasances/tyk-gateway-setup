@@ -6,7 +6,7 @@ This project just lists the basic instructions to install the Tyk open source AP
 
 ## 1. Create the Docker network
 
-{{docker create network tyk-net}}
+{{{docker create network tyk-net}}}
 
 ''Note: replace {{tyk-net}} with your network.''
 
