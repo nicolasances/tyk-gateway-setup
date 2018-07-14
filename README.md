@@ -8,7 +8,7 @@ This project just lists the basic instructions to install the Tyk open source AP
 
     docker create network tyk-net    
 
-*Note: replace     tyk-net     with your network.*
+*Note: replace 'tyk-net' with your network.*
 
 ## 2. Start a redis container
 
@@ -16,19 +16,19 @@ This project just lists the basic instructions to install the Tyk open source AP
 
 ## 3. Create a tyk.conf file
 
-See the tyk configuration file     tyk.conf     in this repository.
+See the tyk configuration file 'tyk.conf' in this repository.
 
 ## 4. Start the tyk gateway container
 
     docker run -d --network tyk-net --name gateway -p 8080:8080 -e TYKSECRET=asdasd -v  /root/tyk-ce/tyk.conf:/opt/tyk-gateway/tyk.conf tykio/tyk-gateway     
 
 Important steps here:
- * replate     tyk-net     with your network (but has to be the same of redis)
+ * replate 'tyk-net' with your network (but has to be the same of redis)
  * set the right port (in this case 8080)
- * set the right TYKSECRET: this is going to be used to call the Tyk Gateway own APIs (    x-tyk-authorization     header)
- * link the     tyk.conf     file
+ * set the right TYKSECRET: this is going to be used to call the Tyk Gateway own APIs ( 'x-tyk-authorization' header)
+ * link the 'tyk.conf' file
 
-*Note that the     secret     field in the     tyk.conf     file won't actually set the TYK SECRET, since Tyk will override it with the TYKSECRET environment variable: that's why we're passing that env variable in the docker run command.*
+*Note that the 'secret' field in the 'tyk.conf' file won't actually set the TYK SECRET, since Tyk will override it with the TYKSECRET environment variable: that's why we're passing that env variable in the docker run command.*
 
 At this point the gateway should be answering on http://localhost:8080/tyk/apis.
 
@@ -44,8 +44,8 @@ To create an API on the gateway you can call the following gateway API:
 
 An example of api definition file (    expenses.json    ) can be found in this repository.
 Note that:
- * you have to replace the     target_url     parameter with the actual target URL where the API is released
- * set     use_basic_auth     to     true     to make sure that Basic auth is required on this API
+ * you have to replace the 'target_url' parameter with the actual target URL where the API is released
+ * set 'use_basic_auth' to 'true' to make sure that Basic auth is required on this API
 
 ## 6. Create a user on the Gateway
 
