@@ -36,19 +36,19 @@ Important steps here:
 
 *Note that the* `secret` *field in the* `tyk.conf` *file won't actually set the TYK SECRET, since Tyk will override it with the TYKSECRET environment variable: that's why we're passing that env variable in the docker run command.*
 
-*Note that the* `listen_port` *parameter in* `tyk.conf` *is useless and gets overridden by the TYKLISTENPORT env variable that has to be set when starting the container.* 
+*Note that the* `listen_port` *parameter in* `tyk.conf` *is useless and gets overridden by the TYKLISTENPORT env variable that has to be set when starting the container.*
 
-At this point the gateway should be answering on http://localhost:8080/tyk/apis.
+At this point the gateway should be answering on https://<domain>:443/tyk/apis.
 
 Try it with:
-    curl http://localhost:8080/tyk/apis -H "x-tyk-authorization: <your TYKSECRET>"    
+    curl https://<domain>:443/tyk/apis -H "x-tyk-authorization: <your TYKSECRET>"    
 It should return the list of available released APIs on the gateway.
 
 ## 5. Create an API
 
 To create an API on the gateway you can call the following gateway API:
 
-    curl -X POST http://localhost:8080/tyk/apis -H "x-tyk-authorization: <your TYKSECRET>" -H "Content-Type: application/json" -d @expenses.json    
+    curl -X POST https://<domain>:443/tyk/apis -H "x-tyk-authorization: <your TYKSECRET>" -H "Content-Type: application/json" -d @expenses.json    
 
 An example of api definition file (`expenses.json`) can be found in this repository.
 Note that:
@@ -59,7 +59,7 @@ Note that:
 
 This user is going to be the one used in the Basic Authentication to call the APIs that you are going to deploy on the gateway.
 
-    curl -X POST http://localhost:8080/tyk/keys/<username> -H "x-tyk-authorization: <your TYKSECRET>" -H "Content-Type: application/json" -d @user.json    
+    curl -X POST https://<domain>:443/tyk/keys/<username> -H "x-tyk-authorization: <your TYKSECRET>" -H "Content-Type: application/json" -d @user.json    
 
 `user.json` is a file where you're storing the user definition, **including its password**.
 
