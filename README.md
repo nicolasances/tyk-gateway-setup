@@ -50,6 +50,10 @@ To create an API on the gateway you can call the following gateway API:
 
     curl -X POST https://<domain>:443/tyk/apis -H "x-tyk-authorization: <your TYKSECRET>" -H "Content-Type: application/json" -d @expenses.json    
 
+After creating the API, remember to **hot reload** the gateway.
+
+    curl -X GET https://<domain>:443/tyk/reload -H "x-tyk-authorization: <your TYKSECRET>"
+
 An example of api definition file (`expenses.json`) can be found in this repository.
 Note that:
  * you have to replace the 'target_url' parameter with the actual target URL where the API is released
